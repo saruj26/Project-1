@@ -7,6 +7,8 @@ import axios from "axios";
 import { Modal, Button } from 'react-bootstrap';
 import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import { SlCalender } from "react-icons/sl";
+import '../Home/Home.css';
+
 
 function Order() {
   const { user } = useOutletContext();
@@ -19,12 +21,21 @@ function Order() {
   const [currentOrderId, setCurrentOrderId] = useState(null); // State to track the current order being edited
   const [showViewModal, setShowViewModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  // const [payment]
   const [filteredOrder, setFilteredOrder] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [payment, setPayment] = useState('');
+  const [paymentTotal, setPaymentTotal] = useState('');
+
+
   const navigate = useNavigate();
 
   const handleShowViewModal = async (order) => {
     try {
+      setPayment(order.paymentMethod);
+      setPaymentTotal(order.totalAmount)
+      console.log("order",order.paymentMethod);
+      
       axios.get(`http://localhost:8080/backend/api/Customer/get_order_details.php`, {
         params: {
           invoiceID: order.orderID,
@@ -214,7 +225,7 @@ function Order() {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
+  // if (loading) return <div>Loading...</div>;
   if (error) { return <div className="error">{error}</div>; }
 
   return (
@@ -312,7 +323,7 @@ function Order() {
                           const status = e.target.value === "1" ? 'processing' : e.target.value === "2" ? 'pending' : 'delivered';
                           handleStatusChange(order.orderID, status);
                         }}
-                        disabled={order.status === 'delivered' || order.paymentMethod === null}
+                        disabled={order.status === 'delivered'}
 
                       />
                     </td>
@@ -353,8 +364,8 @@ function Order() {
               
               <table className="table table-bordered">
                 <thead>
-                <h5>Payment Method : {selectedOrder[0].payment}</h5>
-                <h6>Total : <b>Rs.{selectedOrder[0].total}.00</b></h6>
+                <h5>Payment Method : {payment}</h5>
+                <h6>Total : <b>Rs.{paymentTotal}</b></h6>
                   <tr>
                     <th>Product Name</th>
                     <th>Price</th>
@@ -368,7 +379,7 @@ function Order() {
                       <td>{item.productName}</td>
                       <td>Rs. {item.price}</td>
                       <td>{item.quantity}</td>
-                      <td>Rs. {item.price * item.quantity}</td>
+                      <td>Rs. {item.price * item.quantity}.00</td>
                     </tr>
                   ))}
                 </tbody>

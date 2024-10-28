@@ -25,12 +25,19 @@ ChartJS.register(
 function Piechart() {
 
 
-const [pendingCount, setPendingCount] = useState(0);
-const [deliveryCount, setDeliveryCount] = useState(0);
+  const [pendingCount, setPendingCount] = useState(0);
+  const [deliveredCount, setDeliveredCount] = useState(0);
+  const [processingCount, setProcessingCount] = useState(0);
 
 useEffect(()=>{
   count();
 },[]);
+
+useEffect(() => {
+  console.log('Updated pending count:', pendingCount);
+  console.log('Updated delivered count:', deliveredCount);
+  console.log('Updated processing count:', processingCount);
+}, [pendingCount, deliveredCount, processingCount]);
 
 const count =async() =>{
    try {
@@ -38,10 +45,14 @@ const count =async() =>{
     const jsonData = response.data;
     //console.log(response);
     console.log('API response:', jsonData);
+    console.log(jsonData.pending);
+    console.log(jsonData.delivered);
+    console.log(jsonData.processing);
     setPendingCount(jsonData.pending);
-    setDeliveryCount(jsonData.delivery);
+    setDeliveredCount(jsonData.delivered);
+    setProcessingCount(jsonData.processing)
     //console.log({pendingCount});
-    //console.log({deliveryCount});
+    //console.log({deliveredCount});
     
   } catch (error) {
     console.error('Error  order details count:', error);
@@ -62,19 +73,21 @@ const options = {
 };
 
 const data = {
-  labels: ['Pending','Delivry'],
+  labels: ['Pending','Delivered', 'Processing'],
   datasets: [
     {
       label: 'Order',
-      data: [pendingCount, deliveryCount],
+      data: [pendingCount, deliveredCount, processingCount],
       backgroundColor: [
-        '#219ebc',
-        '#8ecae6',
+        '#ff4d043d',  // Pending
+        '#ff9999',  // Delivered
+        '#ff6666',  // Processing
         
       ],
       borderColor: [
-        'rgba(25, 99, 132, 5)',
-        'rgba(165, 19, 152, 0.5)',
+        'rgba(255, 77, 73, 1)',   // Pending border
+        'rgba(255, 153, 153, 1)', // Delivered border
+        'rgba(255, 102, 102, 1)',   // Processing border
         
       ],
       borderWidth: 1,

@@ -110,7 +110,7 @@ const handleChange = (e, setValue, nextRef) => {
       {/* Card Body */}
       <div className="card-body">
         <p className="mb-4" style={{ fontSize: '100%' }}>
-          We've sent a password reset code to your email. Please check your email and enter the code number.
+          We've sent a verification code to your customer email. Please  enter the code number.
         </p>
   
         <div className="d-flex justify-content-between mb-4">

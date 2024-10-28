@@ -69,14 +69,14 @@ const Dash = () => {
           </div>
         </div>
         <div className='col-md-3 col-sm-6 mb-4'>
-          <div className='card border-0 shadow-sm rounded-4 text-center bg-warning text-white'>
+          <div className='card border-0 shadow-sm rounded-4 text-center bg-warning text-white h-100'>
             <div className='card-body'>
             <div className="d-flex justify-content-center align-items-center">
             <BsTruck size={50} />&nbsp;
             <h5 className='card-title mt-3'>Today Sales</h5>
             </div>
               
-              <span className='display-6'>${amount}</span>
+              <span className='display-6 fs-3 py-2 '>${amount}</span>
             </div>
           </div>
         </div>
@@ -93,7 +93,7 @@ const Dash = () => {
         <div className='col-lg-5 col-md-7 mb-4'>
           <div className='card shadow-lg p-4 bg-light rounded-4'>
             <div className='card-body'>
-              <h4 className='text-center'>Order & Delivery</h4>
+              <h4 className='text-center'>Order Delivery Details</h4>
               <Piechart />
             </div>
           </div>
